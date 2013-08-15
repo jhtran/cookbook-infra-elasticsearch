@@ -2,9 +2,19 @@
 # Cookbook Name:: infra-elasticsearch
 # Recipe:: default
 #
-# Copyright 2013, YOUR_COMPANY_NAME
+# Copyright 2013, AT&T Services Inc.
 #
-# All rights reserved - Do Not Redistribute
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 node.override["elasticsearch"]["allocated_memory"] = '4000m'
 node.override["elasticsearch"]["cluster_name"] = 'foobar'
@@ -23,10 +33,8 @@ custom = {'indices.memory.index_buffer_size' => '50%',
           'threadpool.index.queue_size' => 100
          }
 node.override["elasticsearch"]["custom_config"] = custom
-# temporary workaround for chef broken search role:elasticsearch"
-node.override["elasticsearch"]["discovery"]["search_query"] =  "name:c1r2.int.bwi1.attcompute.com OR name:c2r2.int.bwi1.attcompute.com OR name:c3r2.int.bwi1.attcompute.com"
+node.override["elasticsearch"]["discovery"]["search_query"] =  "roles:infra-elasticsearch"
 node.override["elasticsearch"]["plugins"]["karmi/elasticsearch-paramedic"] = {}
-node.override["elasticsearch"]["nginx"]["users"] = [{ "username"=> "foo", "password"=> "bar" }]
 node.override["elasticsearch"]["allow_cluster_api"] = 'true'
 node.override["elasticsearch"]["discovery"]["zen"]["minimum_master_nodes"] = '2'
 
